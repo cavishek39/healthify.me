@@ -9,14 +9,16 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wishuptech.healthifyme"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.wishuptech.healthifyme"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +39,10 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "supabaseUrl": "https://nrtdxqylcjhjoclzpojv.supabase.co",
+      "supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ydGR4cXlsY2poam9jbHpwb2p2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDgwODQ5NTEsImV4cCI6MjA2MzY2MDk1MX0.1UnxvwoGYms_YAYxuw7998EncR8x35W_UqnIfkyXjJY"
     }
   }
 }
