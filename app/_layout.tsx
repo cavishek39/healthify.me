@@ -3,7 +3,11 @@ import { useColorScheme } from '@/hooks/useColorScheme'
 import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { DefaultTheme, PaperProvider } from 'react-native-paper'
+import {
+  MD3DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  PaperProvider,
+} from 'react-native-paper'
 
 export default function RootLayout() {
   const colorScheme = useColorScheme()
@@ -12,18 +16,34 @@ export default function RootLayout() {
   })
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null
   }
 
-  const theme = {
-    ...DefaultTheme,
+  const lightTheme = {
+    ...PaperDefaultTheme,
     colors: {
-      ...DefaultTheme.colors,
-      primary: '#4CAF50', // A calming green color commonly used in health/medical apps
-      secondary: '#2196F3', // A trustworthy blue that complements the primary green
+      ...PaperDefaultTheme.colors,
+      primary: '#4CAF50',
+      secondary: '#2196F3',
+      background: '#f7f7ff',
+      surface: '#fff',
+      text: '#222',
     },
   }
+
+  const darkTheme = {
+    ...PaperDarkTheme,
+    colors: {
+      ...PaperDarkTheme.colors,
+      primary: '#6c63ff',
+      secondary: '#2196F3',
+      background: '#181828',
+      surface: '#23233a',
+      text: '#fff',
+    },
+  }
+
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme
 
   return (
     <AuthProvider>

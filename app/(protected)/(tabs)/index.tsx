@@ -1,3 +1,4 @@
+import QuickStatsRow from '@/components/containers/QuickStats'
 import { useAuth } from '@/context/AuthProvider'
 import { supabase } from '@/utils/supabase'
 import React, { useEffect, useRef, useState } from 'react'
@@ -62,50 +63,6 @@ function ProfilePromptCard({ onPress }: { onPress: () => void }) {
         </Button>
       </Card.Content>
     </Card>
-  )
-}
-
-// QuickStatsRow component to display quick stats like steps, calories burned, and sleep
-function QuickStatsRow() {
-  return (
-    <View style={styles.quickStatsRow}>
-      <Card style={styles.quickStatCard} mode='contained'>
-        <Card.Content style={styles.quickStatContent}>
-          <Avatar.Icon
-            size={28}
-            icon='walk'
-            style={styles.quickStatIcon}
-            color='#fff'
-          />
-          <Text style={styles.quickStatLabel}>Steps</Text>
-          <Text style={styles.quickStatValue}>4,200</Text>
-        </Card.Content>
-      </Card>
-      <Card style={styles.quickStatCard} mode='contained'>
-        <Card.Content style={styles.quickStatContent}>
-          <Avatar.Icon
-            size={28}
-            icon='fire'
-            style={styles.quickStatIcon}
-            color='#fff'
-          />
-          <Text style={styles.quickStatLabel}>Burned</Text>
-          <Text style={styles.quickStatValue}>320 kcal</Text>
-        </Card.Content>
-      </Card>
-      <Card style={styles.quickStatCard} mode='contained'>
-        <Card.Content style={styles.quickStatContent}>
-          <Avatar.Icon
-            size={28}
-            icon='sleep'
-            style={styles.quickStatIcon}
-            color='#fff'
-          />
-          <Text style={styles.quickStatLabel}>Sleep</Text>
-          <Text style={styles.quickStatValue}>7.2 h</Text>
-        </Card.Content>
-      </Card>
-    </View>
   )
 }
 
@@ -280,11 +237,11 @@ function BMICard({ bmi }: { bmi: string | null }) {
           {bmi}
         </Text>
         <Text variant='bodyMedium' style={styles.bmiStatus}>
-          {bmi < 18.5
+          {Number(bmi) < 18.5
             ? 'Underweight'
-            : bmi < 25
+            : Number(bmi) < 25
             ? 'Normal'
-            : bmi < 30
+            : Number(bmi) < 30
             ? 'Overweight'
             : 'Obese'}
         </Text>
@@ -350,6 +307,7 @@ function WaterCard({
 export default function HomeScreen() {
   const { logOut, user } = useAuth()
   const theme = useTheme()
+  const isDark = theme.dark
 
   // Demo state, replace with real data
   const [profile, setProfile] = useState<{
@@ -495,7 +453,10 @@ export default function HomeScreen() {
       <AnimatedHeader headerTranslate={headerTranslate} />
 
       <Animated.ScrollView
-        contentContainerStyle={styles.scroll}
+        contentContainerStyle={[
+          styles.scroll,
+          { backgroundColor: theme.colors.background },
+        ]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={Animated.event(
@@ -532,9 +493,18 @@ export default function HomeScreen() {
         <Button
           mode='outlined'
           onPress={logOut}
-          style={styles.logoutButton}
+          style={[
+            styles.logoutButton,
+            isDark && {
+              backgroundColor: theme.colors.surface,
+              borderColor: '#333',
+            },
+          ]}
           icon='logout'
-          labelStyle={styles.logoutLabel}>
+          labelStyle={[
+            styles.logoutLabel,
+            isDark && { color: theme.colors.primary },
+          ]}>
           Log Out
         </Button>
       </Animated.ScrollView>
@@ -543,8 +513,13 @@ export default function HomeScreen() {
         <Modal
           visible={showProfileModal}
           onDismiss={() => setShowProfileModal(false)}
-          contentContainerStyle={styles.modal}>
-          <Text variant='titleLarge' style={styles.modalTitle}>
+          contentContainerStyle={[
+            styles.modal,
+            isDark && { backgroundColor: theme.colors.surface },
+          ]}>
+          <Text
+            variant='titleLarge'
+            style={[styles.modalTitle, isDark && { color: theme.colors.text }]}>
             Enter Your Details
           </Text>
           <TextInput
@@ -552,33 +527,103 @@ export default function HomeScreen() {
             value={form.age}
             onChangeText={(v) => setForm((f) => ({ ...f, age: v }))}
             keyboardType='numeric'
-            style={styles.input}
+            style={[
+              styles.input,
+              isDark && {
+                backgroundColor: theme.colors.background,
+                color: theme.colors.text,
+              },
+            ]}
+            theme={
+              isDark
+                ? {
+                    colors: {
+                      background: theme.colors.background,
+                      text: theme.colors.text,
+                    },
+                  }
+                : undefined
+            }
           />
           <TextInput
             label='Gender'
             value={form.gender}
             onChangeText={(v) => setForm((f) => ({ ...f, gender: v }))}
-            style={styles.input}
+            style={[
+              styles.input,
+              isDark && {
+                backgroundColor: theme.colors.background,
+                color: theme.colors.text,
+              },
+            ]}
+            theme={
+              isDark
+                ? {
+                    colors: {
+                      background: theme.colors.background,
+                      text: theme.colors.text,
+                    },
+                  }
+                : undefined
+            }
           />
           <TextInput
             label='Height (cm)'
             value={form.height}
             onChangeText={(v) => setForm((f) => ({ ...f, height: v }))}
             keyboardType='numeric'
-            style={styles.input}
+            style={[
+              styles.input,
+              isDark && {
+                backgroundColor: theme.colors.background,
+                color: theme.colors.text,
+              },
+            ]}
+            theme={
+              isDark
+                ? {
+                    colors: {
+                      background: theme.colors.background,
+                      text: theme.colors.text,
+                    },
+                  }
+                : undefined
+            }
           />
           <TextInput
             label='Weight (kg)'
             value={form.weight}
             onChangeText={(v) => setForm((f) => ({ ...f, weight: v }))}
             keyboardType='numeric'
-            style={styles.input}
+            style={[
+              styles.input,
+              isDark && {
+                backgroundColor: theme.colors.background,
+                color: theme.colors.text,
+              },
+            ]}
+            theme={
+              isDark
+                ? {
+                    colors: {
+                      background: theme.colors.background,
+                      text: theme.colors.text,
+                    },
+                  }
+                : undefined
+            }
           />
           <Button
             mode='contained'
             onPress={handleProfileSubmit}
-            style={styles.premiumButton}
-            labelStyle={styles.premiumButtonLabel}>
+            style={[
+              styles.premiumButton,
+              isDark && { backgroundColor: theme.colors.primary },
+            ]}
+            labelStyle={[
+              styles.premiumButtonLabel,
+              isDark && { color: theme.colors.onPrimary || '#fff' },
+            ]}>
             Save
           </Button>
         </Modal>
@@ -600,6 +645,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 18,
     elevation: 5,
     alignItems: 'flex-start',
+    // backgroundColor: '#ececff',
   },
   headerTitle: {
     fontSize: 28,
@@ -754,39 +800,6 @@ const styles = StyleSheet.create({
     color: '#2196f3',
     fontWeight: '600',
     fontSize: 13,
-  },
-  quickStatsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-    marginBottom: 18,
-    gap: 10,
-  },
-  quickStatCard: {
-    flex: 1,
-    marginHorizontal: 2,
-    borderRadius: 14,
-    backgroundColor: '#6c63ff',
-    elevation: 0,
-  },
-  quickStatContent: {
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  quickStatIcon: {
-    backgroundColor: '#6c63ff',
-    marginBottom: 4,
-  },
-  quickStatLabel: {
-    fontSize: 13,
-    color: '#fff',
-    fontWeight: '500',
-    marginBottom: 2,
-  },
-  quickStatValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
   },
   weightIcon: {
     backgroundColor: '#6c63ff',
