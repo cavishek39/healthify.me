@@ -1,3 +1,4 @@
+import { Colors } from '@/constants/Colors'
 import { supabase } from '@/utils/supabase'
 import { useRouter } from 'expo-router'
 import React from 'react'
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
     marginBottom: 18,
     backgroundColor: 'rgba(255,255,255,0.85)',
     borderRadius: 12,
+    color: '#000',
   },
   button: {
     marginTop: 8,
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowColor: '#43a047',
     shadowOpacity: 0.2,
+    fontSize: 16,
     shadowRadius: 8,
   },
   link: {

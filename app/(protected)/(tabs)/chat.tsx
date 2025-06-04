@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   messageBubble: {
-    maxWidth: Dimensions.get('window').width * 0.7,
+    maxWidth: '70%',
     minWidth: 60,
     paddingVertical: 6,
     paddingHorizontal: 0,
